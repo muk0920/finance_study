@@ -1,4 +1,8 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>은행 필기 상식노트</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -10,6 +14,7 @@
   --fin:#1E6A50; --fin-soft:#DCEBE3;
   --eco:#8E6110; --eco-soft:#F3E7CC;
   --dig:#2D5B9A; --dig-soft:#DCE6F4;
+  --star:#B07A12;
   --ok:#1F7A46; --ok-soft:#DDF0E3; --bad:#B4372E; --bad-soft:#F7DEDA;
   --sans:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",system-ui,sans-serif;
   --serif:"Gowun Batang","AppleMyungjo","Batang",serif;
@@ -21,6 +26,7 @@
     --bg:#0F1513; --surface:#171F1C; --sunk:#1F2925; --ink:#E4EBE7; --muted:#98A69F; --line:#2C3833;
     --accent:#5BC197; --accent-ink:#0F1513; --accent-soft:#1C3A2E;
     --fin:#6CCB9F; --fin-soft:#1C3A2E; --eco:#E0B35A; --eco-soft:#3A2F17; --dig:#86AEE8; --dig-soft:#1D2B42;
+    --star:#E0B35A;
     --ok:#6CCB8E; --ok-soft:#173323; --bad:#F08A7E; --bad-soft:#3D1F1C;
   }
 }
@@ -29,26 +35,35 @@
   --bg:#0F1513; --surface:#171F1C; --sunk:#1F2925; --ink:#E4EBE7; --muted:#98A69F; --line:#2C3833;
   --accent:#5BC197; --accent-ink:#0F1513; --accent-soft:#1C3A2E;
   --fin:#6CCB9F; --fin-soft:#1C3A2E; --eco:#E0B35A; --eco-soft:#3A2F17; --dig:#86AEE8; --dig-soft:#1D2B42;
+  --star:#E0B35A;
   --ok:#6CCB8E; --ok-soft:#173323; --bad:#F08A7E; --bad-soft:#3D1F1C;
 }
 *{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0}
+[hidden]{display:none!important}
+img{max-width:100%}
 body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;padding:0 16px}
-.wrap{max-width:1080px;margin:0 auto;padding-block:28px 64px;display:flex;flex-direction:column;gap:20px}
-button{font:inherit;color:inherit;cursor:pointer}
-button:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding-block:28px 64px;display:flex;flex-direction:column;gap:16px}
+button,select{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
 header.top{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px}
 .eyebrow{font-size:12px;letter-spacing:.06em;color:var(--muted);margin:0 0 4px}
 h1{font-family:var(--serif);font-size:32px;line-height:1.15;margin:0;text-wrap:balance}
+h1 small{font-family:var(--mono);font-size:13px;color:var(--muted);font-weight:500;margin-left:8px;letter-spacing:0}
 .tabs{display:inline-flex;background:var(--sunk);border-radius:999px;padding:4px;gap:4px}
 .tabs button{border:0;background:transparent;padding:8px 18px;border-radius:999px;font-weight:500;color:var(--muted)}
 .tabs button[aria-selected="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
 
-.filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
-.chip{border:1px solid var(--line);background:var(--surface);padding:6px 14px;border-radius:999px;font-size:14px;display:inline-flex;gap:6px;align-items:center}
+.filters{display:flex;flex-direction:column;gap:8px}
+.frow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.frow .lbl{font-size:12px;color:var(--muted);width:44px;flex:none}
+.chip{border:1px solid var(--line);background:var(--surface);padding:5px 13px;border-radius:999px;font-size:14px;display:inline-flex;gap:6px;align-items:center}
 .chip .n{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.chip .st{color:var(--star);letter-spacing:-1px}
 .chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
-.chip[aria-pressed="true"] .n{color:inherit;opacity:.7}
+.chip[aria-pressed="true"] .n,.chip[aria-pressed="true"] .st{color:inherit;opacity:.75}
 
 .toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
 .toolbar .left{display:flex;flex-wrap:wrap;gap:10px;align-items:center;flex:1 1 280px}
@@ -59,21 +74,25 @@ h1{font-family:var(--serif);font-size:32px;line-height:1.15;margin:0;text-wrap:b
 .meter{width:120px;height:6px;border-radius:3px;background:var(--sunk);overflow:hidden}
 .meter i{display:block;height:100%;background:var(--accent);transition:width .3s}
 .num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.count{font-size:13px;color:var(--muted);margin:0}
 
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:18px;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px}
 .card.flash{animation:flash 1.4s ease}
 @keyframes flash{0%,40%{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}100%{}}
 .card-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.cat{font-size:12px;font-weight:600;letter-spacing:.04em;padding:2px 8px;border-radius:4px}
+.card-top .l{display:flex;gap:8px;align-items:center}
+.rank{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.stars{color:var(--star);font-size:12px;letter-spacing:-1px}
+.cat{font-size:12px;font-weight:600;letter-spacing:.04em;padding:2px 8px;border-radius:4px;white-space:nowrap}
 .cat-fin{color:var(--fin);background:var(--fin-soft)}
 .cat-eco{color:var(--eco);background:var(--eco-soft)}
 .cat-dig{color:var(--dig);background:var(--dig-soft)}
-.miss{font-size:12px;color:var(--bad)}
+.miss{font-size:12px;color:var(--bad);white-space:nowrap}
 .term{font-family:var(--serif);font-size:22px;line-height:1.3;margin:0;text-wrap:balance}
 .en{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:-6px}
 .def{margin:0}
-.points{margin:0;padding-left:18px;font-size:14px;color:var(--ink);display:flex;flex-direction:column;gap:3px}
+.points{margin:0;padding-left:18px;font-size:14px;display:flex;flex-direction:column;gap:3px}
 .points li::marker{color:var(--muted)}
 .trap{background:var(--sunk);border-radius:6px;padding:10px 12px;font-size:13.5px}
 .trap b{display:block;font-size:11.5px;letter-spacing:.06em;color:var(--accent);margin-bottom:2px}
@@ -83,11 +102,13 @@ h1{font-family:var(--serif);font-size:32px;line-height:1.15;margin:0;text-wrap:b
 .btn-s:hover{color:var(--ink);border-color:var(--muted)}
 .btn-s.known[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .empty{color:var(--muted);padding:40px 0;text-align:center}
+.more{align-self:center;margin-top:6px}
 
 /* quiz */
 .qbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
 .qbar .info{font-size:14px;color:var(--muted)}
-.qbar .acts{display:flex;gap:8px;flex-wrap:wrap}
+.qbar .acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sel{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:7px 10px;font-size:14px}
 .btn{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:8px 14px;font-size:14px;font-weight:500}
 .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .btn:disabled{opacity:.45;cursor:default}
@@ -119,16 +140,18 @@ h1{font-family:var(--serif);font-size:32px;line-height:1.15;margin:0;text-wrap:b
 .wronglist{list-style:none;padding:0;margin:0;width:100%;display:flex;flex-direction:column;gap:6px;text-align:left}
 .wronglist li{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);border-radius:8px;padding:10px 12px}
 .wronglist .t{display:flex;gap:8px;align-items:center}
-footer{font-size:12px;color:var(--muted);text-align:center}
-@media (max-width:520px){h1{font-size:26px}.qcard{padding:18px}.qtext{font-size:16.5px}.meter{width:80px}}
+footer{font-size:12px;color:var(--muted);text-align:center;max-width:640px;margin:8px auto 0}
+@media (max-width:520px){h1{font-size:26px}.qcard{padding:18px}.qtext{font-size:16.5px}.meter{width:80px}.frow .lbl{width:100%}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
+</head>
+<body>
 
 <div class="wrap">
   <header class="top">
     <div>
       <p class="eyebrow">은행 필기 · 금융 · 경제 · 디지털 상식</p>
-      <h1>상식노트</h1>
+      <h1>상식노트<small id="total"></small></h1>
     </div>
     <div class="tabs" role="tablist">
       <button role="tab" id="tab-learn" aria-selected="true">개념 학습</button>
@@ -136,23 +159,35 @@ footer{font-size:12px;color:var(--muted);text-align:center}
     </div>
   </header>
 
-  <div class="filters" id="filters"></div>
+  <div class="filters">
+    <div class="frow" id="catRow"></div>
+    <div class="frow" id="tierRow"></div>
+  </div>
 
   <section id="learn">
-    <div class="toolbar" style="margin-bottom:14px">
+    <div class="toolbar" style="margin-bottom:10px">
       <div class="left">
-        <input id="search" class="search" type="search" placeholder="용어 검색 (예: DSR, 환율)">
+        <input id="search" class="search" type="search" placeholder="용어 검색 (예: DSR, 환율, 블록체인)">
         <button id="hide" class="toggle" aria-pressed="false">뜻 가리기</button>
       </div>
-      <div class="progress">외운 개념 <span class="num" id="knownCount">0 / 24</span><span class="meter"><i id="knownBar" style="width:0"></i></span></div>
+      <div class="progress">외운 개념 <span class="num" id="knownCount">0 / 0</span><span class="meter"><i id="knownBar" style="width:0"></i></span></div>
     </div>
+    <p class="count" id="count" style="margin-bottom:10px"></p>
     <div class="grid" id="grid"></div>
+    <div style="display:flex;justify-content:center"><button class="btn more" id="more" hidden></button></div>
   </section>
 
   <section id="quiz" hidden>
     <div class="qbar" style="margin-bottom:12px">
       <div class="info" id="qinfo"></div>
       <div class="acts">
+        <label class="hint" for="qcount">문제 수</label>
+        <select id="qcount" class="sel">
+          <option value="10">10문제</option>
+          <option value="20" selected>20문제</option>
+          <option value="50">50문제</option>
+          <option value="0">전체</option>
+        </select>
         <button class="btn" id="qWrongOnly">자주 틀린 문제만</button>
         <button class="btn" id="qRestart">새로 섞어서 시작</button>
       </div>
@@ -161,219 +196,78 @@ footer{font-size:12px;color:var(--muted);text-align:center}
     <div id="qbody"></div>
   </section>
 
-  <footer>문제와 해설은 학습용으로 새로 작성한 예시입니다. 수치와 제도는 2025년 기준이니 시험 전에 최신 내용을 확인하세요.</footer>
+  <footer>문제와 해설은 학습용으로 새로 작성한 예시이고, 빈출 순위는 은행권 필기에서 자주 다뤄지는 주제를 바탕으로 한 추정이며 공식 통계가 아닙니다. 수치와 제도는 2025년 기준이니 시험 전에 최신 내용을 확인하세요.</footer>
 </div>
 
 <script>
+window.BN = { fin: [], eco: [], dig: [], add(cat, rows){ this[cat].push(...rows); } };
+</script>
+<script src="data-fin-1.js"></script>
+<script src="data-fin-2.js"></script>
+<script src="data-eco-1.js"></script>
+<script src="data-eco-2.js"></script>
+<script src="data-dig-1.js"></script>
+<script src="data-dig-2.js"></script>
+<script>
 const CATS = { fin: '금융', eco: '경제', dig: '디지털' };
-const DATA = [
-  { id:'f1', cat:'fin', term:'BIS 자기자본비율', en:'BIS Capital Adequacy Ratio',
-    def:'은행의 자기자본을 위험가중자산으로 나눈 비율. 은행이 손실을 얼마나 견딜 수 있는지 보여주는 건전성 지표다.',
-    points:['산식: 자기자본 ÷ 위험가중자산 × 100','바젤Ⅲ 최저 기준: 보통주자본 4.5% · 기본자본 6% · 총자본 8%','자본보전완충자본 2.5%가 추가로 요구된다'],
-    trap:'위험가중자산은 분모라서 늘어나면 비율이 내려간다. 기준은 국제결제은행 산하 바젤은행감독위원회(BCBS)가 정한다.',
-    quiz:{ q:'BIS 자기자본비율에 대한 설명으로 옳지 않은 것은?',
-      o:['바젤은행감독위원회가 정한 은행 건전성 기준이다.','자기자본을 위험가중자산으로 나누어 계산한다.','바젤Ⅲ 기준 최저 총자본비율은 8%이다.','위험가중자산이 늘어나면 BIS 비율도 올라간다.','보통주자본비율의 최저 기준은 4.5%이다.'],
-      a:3, exp:'위험가중자산은 분모다. 자기자본이 그대로일 때 위험가중자산이 늘면 BIS 비율은 떨어진다.' } },
-  { id:'f2', cat:'fin', term:'예금자보호제도', en:'Deposit Insurance',
-    def:'금융회사가 파산 등으로 예금을 돌려줄 수 없을 때 예금보험공사가 대신 지급하는 제도.',
-    points:['보호한도: 1인당 금융회사별 원금과 이자를 합쳐 1억 원 (2025년 9월 1일부터, 이전에는 5천만 원)','보호: 보통·정기예금, 적금, 외화예금, 원금보장형 신탁','비보호: 펀드 같은 실적배당형 상품, CD, RP, 은행채, 주택청약종합저축'],
-    trap:'주택청약종합저축은 예금보험 대상이 아니다. 대신 주택도시기금 재원이라 정부가 관리한다.',
-    quiz:{ q:'예금자보호제도의 보호 대상이 아닌 것은?',
-      o:['보통예금','정기적금','외화예금','주택청약종합저축','원금보장형 신탁'],
-      a:3, exp:'주택청약종합저축은 예금보험공사의 보호 대상이 아니고 정부가 관리한다. 보호한도는 2025년 9월부터 1인당 금융회사별 1억 원이다.' } },
-  { id:'f3', cat:'fin', term:'듀레이션', en:'Duration',
-    def:'채권의 현금흐름을 회수하는 데 걸리는 가중평균 기간. 금리 변화에 대한 채권 가격의 민감도를 나타낸다.',
-    points:['만기가 길수록 듀레이션이 길다','표면금리가 높을수록, 시장금리가 높을수록 듀레이션이 짧다','무이표채(할인채)의 듀레이션은 만기와 같다'],
-    trap:'듀레이션이 길수록 금리 변동에 따른 가격 변동폭이 크다. 금리 상승이 예상되면 듀레이션을 줄인다.',
-    quiz:{ q:'채권의 듀레이션에 대한 설명으로 옳은 것은?',
-      o:['표면금리가 높을수록 듀레이션은 길어진다.','만기가 길수록 듀레이션은 짧아진다.','무이표채(할인채)의 듀레이션은 만기와 같다.','듀레이션이 길수록 금리 변화에 따른 가격 변동이 작다.','시장금리가 오르면 듀레이션은 길어진다.'],
-      a:2, exp:'할인채는 중간에 받는 이자가 없어 만기에 한 번에 회수하므로 듀레이션이 만기와 같다. 표면금리나 시장금리가 높으면 듀레이션은 짧아지고, 듀레이션이 길수록 가격 변동은 커진다.' } },
-  { id:'f4', cat:'fin', term:'기준금리', en:'Base Rate',
-    def:'한국은행이 금융기관과 거래할 때 기준이 되는 정책금리. 시중 금리 전반에 영향을 준다.',
-    points:['한국은행 금융통화위원회(7명, 의장은 총재)가 연 8회 결정','7일물 RP 매각 시 고정입찰금리로 쓰인다','인상하면 대출 감소, 물가 안정, 원화 강세 압력으로 이어진다'],
-    trap:'결정 주체는 기획재정부가 아니라 한국은행 금융통화위원회다.',
-    quiz:{ q:'우리나라 기준금리에 대한 설명으로 옳지 않은 것은?',
-      o:['한국은행 금융통화위원회가 결정한다.','기준금리 결정 회의는 연 8회 열린다.','기획재정부 장관이 최종 승인해야 효력이 생긴다.','7일물 RP 매각 시 고정입찰금리로 쓰인다.','금융통화위원회 의장은 한국은행 총재가 맡는다.'],
-      a:2, exp:'기준금리는 한국은행 금융통화위원회가 독립적으로 결정하며 정부의 승인 절차가 없다.' } },
-  { id:'f5', cat:'fin', term:'DSR', en:'Debt Service Ratio · 총부채원리금상환비율',
-    def:'차주가 가진 모든 대출의 연간 원리금 상환액을 연소득으로 나눈 비율.',
-    points:['LTV: 담보가치 대비 대출금 비율','DTI: (주담대 원리금 + 기타대출 이자) ÷ 연소득','DSR: 모든 대출 원리금 ÷ 연소득으로, 셋 중 가장 포괄적이다'],
-    trap:'DTI는 기타대출의 이자만, DSR은 기타대출의 원리금까지 반영한다. 미래 금리 상승 위험을 더해 계산하는 스트레스 DSR도 함께 알아두자.',
-    quiz:{ q:'주택담보대출뿐 아니라 신용대출, 자동차 할부 등 모든 대출의 원리금 상환액을 연소득과 비교하는 지표는?',
-      o:['LTV','DTI','DSR','LCR','RTI'],
-      a:2, exp:'DSR은 모든 대출의 원리금을 반영한다. LCR은 유동성커버리지비율, RTI는 임대업이자상환비율이다.' } },
-  { id:'f6', cat:'fin', term:'양적완화 · 테이퍼링', en:'Quantitative Easing · Tapering',
-    def:'양적완화는 금리를 더 내리기 어려울 때 중앙은행이 국채 등 자산을 사들여 시중에 돈을 직접 공급하는 정책이다.',
-    points:['테이퍼링: 자산 매입 규모를 점진적으로 줄이는 것','양적긴축(QT): 보유 자산을 줄여 유동성을 회수하는 것','미 연준의 일반적 순서: 양적완화 → 테이퍼링 → 금리 인상 → 양적긴축'],
-    trap:'테이퍼링은 매입을 멈추는 것이 아니라 매입 속도를 줄이는 것이다.',
-    quiz:{ q:'중앙은행이 자산 매입 규모를 점진적으로 축소하는 것을 뜻하는 용어는?',
-      o:['양적완화','테이퍼링','오퍼레이션 트위스트','양적긴축','헬리콥터 머니'],
-      a:1, exp:'테이퍼링은 자산 매입 속도를 줄이는 것이다. 오퍼레이션 트위스트는 단기채를 팔고 장기채를 사서 장기금리를 낮추는 정책이다.' } },
-  { id:'f7', cat:'fin', term:'코코본드', en:'CoCo Bond · 조건부자본증권',
-    def:'평소에는 채권이지만 발행 은행의 자본비율이 기준 아래로 떨어지거나 부실금융기관으로 지정되면 주식으로 전환되거나 상각되는 채권.',
-    points:['은행의 자본 확충 수단 (BIS 비율 계산 시 자본으로 인정)','원금 손실 위험이 있어 일반 채권보다 금리가 높다','2023년 크레디트스위스 사태 때 AT1 채권이 전액 상각되었다'],
-    trap:'전환사채(CB)는 투자자가 선택해 전환하지만, 코코본드는 미리 정한 사유가 생기면 강제로 전환·상각된다.',
-    quiz:{ q:'발행 은행이 부실해지는 등 사전에 정한 사유가 발생하면 주식으로 전환되거나 상각되는 채권은?',
-      o:['커버드본드','코코본드','전환사채(CB)','신주인수권부사채(BW)','정크본드'],
-      a:1, exp:'코코본드(조건부자본증권)에 대한 설명이다. 커버드본드는 담보자산과 발행기관 모두에 상환을 청구할 수 있는 채권이다.' } },
-  { id:'f8', cat:'fin', term:'COFIX', en:'Cost of Funds Index · 자금조달비용지수',
-    def:'국내 8개 은행이 조달한 자금의 가중평균 금리. 변동금리 주택담보대출의 기준금리로 쓰인다.',
-    points:['은행연합회가 매월 공시한다','신규취급액 기준과 잔액 기준으로 나뉜다','정기예금, 적금, 은행채 등의 조달 금리가 반영된다'],
-    trap:'공시 주체는 한국은행이 아니라 은행연합회다. COFIX가 오르면 이를 기준으로 하는 변동금리 대출 금리도 오른다.',
-    quiz:{ q:'COFIX에 대한 설명으로 옳은 것은?',
-      o:['한국은행이 매일 고시한다.','은행들의 자금조달 비용을 가중평균한 금리이다.','고정금리 대출에만 적용된다.','주식시장의 변동성을 나타내는 지수이다.'],
-      a:1, exp:'COFIX는 은행연합회가 매월 공시하는 은행 자금조달 비용의 가중평균 금리로, 변동금리 대출의 기준이 된다.' } },
+const CAT_ORDER = ['fin', 'eco', 'dig'];
+const TIERS = { 1: { label: '최빈출', stars: '★★★', max: 30 }, 2: { label: '빈출', stars: '★★', max: 70 }, 3: { label: '기본', stars: '★', max: Infinity } };
+const tierOf = r => r <= 30 ? 1 : r <= 70 ? 2 : 3;
+const PAGE = 30;
 
-  { id:'e1', cat:'eco', term:'유동성 함정', en:'Liquidity Trap',
-    def:'금리가 매우 낮아 중앙은행이 통화를 공급해도 사람들이 돈을 쓰지 않고 쥐고 있어 소비와 투자가 늘지 않는 상태.',
-    points:['케인스가 제시한 개념','금리가 하한에 가까워 통화정책이 효과를 잃는다','이때는 재정정책이 상대적으로 효과적이다'],
-    trap:'유동성 함정에서는 금리가 잘 오르지 않아 구축효과도 거의 나타나지 않는다.',
-    quiz:{ q:'금리가 매우 낮은 상황에서 통화를 아무리 공급해도 사람들이 돈을 쥐고만 있어 소비와 투자가 늘지 않는 현상은?',
-      o:['구축효과','유동성 함정','피셔효과','리카도 대등정리','화폐환상'],
-      a:1, exp:'유동성 함정이다. 피셔효과는 명목금리가 실질금리와 기대인플레이션의 합이라는 이론이고, 리카도 대등정리는 국채로 감세해도 소비가 늘지 않는다는 이론이다.' } },
-  { id:'e2', cat:'eco', term:'환율 상승', en:'원화 약세 · KRW Depreciation',
-    def:'원/달러 환율이 오른다는 것은 1달러를 사는 데 원화가 더 많이 필요하다는 뜻, 즉 원화 가치가 떨어졌다는 뜻이다.',
-    points:['수출: 가격 경쟁력이 높아져 수출이 늘어난다','수입: 원자재·수입품 가격이 올라 물가 상승 압력이 생긴다','외화부채 상환 부담과 해외여행·유학 비용이 늘어난다'],
-    trap:'"환율 상승 = 원화 가치 하락 = 원화 약세"로 묶어 외우면 방향을 헷갈리지 않는다.',
-    quiz:{ q:'원/달러 환율이 상승할 때 나타나는 현상으로 옳지 않은 것은?',
-      o:['수출 기업의 가격 경쟁력이 높아진다.','수입 원자재 가격이 올라 국내 물가가 오를 수 있다.','외화부채가 있는 기업의 상환 부담이 커진다.','해외여행 비용이 줄어든다.','외국인 관광객의 국내 여행 수요가 늘어날 수 있다.'],
-      a:3, exp:'원화 가치가 떨어지면 같은 달러를 사는 데 원화가 더 많이 들어 해외여행 비용은 늘어난다.' } },
-  { id:'e3', cat:'eco', term:'GDP', en:'Gross Domestic Product · 국내총생산',
-    def:'일정 기간 한 나라 안에서 새로 생산된 최종 재화와 서비스의 시장가치 합계.',
-    points:['국적과 상관없이 국경 기준 (외국인이 국내에서 생산한 것도 포함)','포함: 자가주택 귀속임대료, 농가의 자가소비 농산물','제외: 중고품 거래, 주식·부동산 매매 차익, 가사노동, 이전지출'],
-    trap:'시장에서 거래되지 않는데도 포함되는 예외(귀속임대료, 자가소비 농산물)가 단골 출제 포인트다.',
-    quiz:{ q:'다음 중 GDP에 포함되는 것은?',
-      o:['중고차 거래 대금','주식 매매 차익','전업주부의 가사노동','자가주택의 귀속임대료','정부의 실업수당 지급'],
-      a:3, exp:'집주인이 자기 집에 살면서 스스로 임대료를 낸다고 보고 GDP에 포함한다. 중고품은 과거 생산분, 주식 매매는 소유권 이전, 실업수당은 이전지출이라 제외된다.' } },
-  { id:'e4', cat:'eco', term:'스태그플레이션', en:'Stagflation',
-    def:'경기 침체(stagnation)와 물가 상승(inflation)이 동시에 나타나는 현상.',
-    points:['1970년대 석유파동이 대표 사례','주로 원자재 가격 급등 같은 공급 충격에서 생긴다','경기 부양과 물가 안정이 충돌해 정책 대응이 어렵다'],
-    trap:'디플레이션(물가 하락), 디스인플레이션(물가 상승률 둔화), 리플레이션(디플레이션 탈출 후 완만한 물가 상승)과 구분하자.',
-    quiz:{ q:'경기 침체 속에서 물가가 오르는 현상은?',
-      o:['디플레이션','디스인플레이션','스태그플레이션','하이퍼인플레이션','리플레이션'],
-      a:2, exp:'스태그플레이션이다. 디스인플레이션은 물가 상승률이 둔화되는 것으로, 물가 자체가 내리는 디플레이션과 다르다.' } },
-  { id:'e5', cat:'eco', term:'필립스 곡선', en:'Phillips Curve',
-    def:'실업률과 물가상승률 사이의 상충 관계(음의 관계)를 나타낸 곡선.',
-    points:['단기: 실업률이 낮아지면 물가상승률이 높아진다 (우하향)','장기: 자연실업률 수준에서 수직 (프리드먼·펠프스)','스태그플레이션은 단기 필립스 곡선이 위로 이동한 것으로 설명된다'],
-    trap:'장기 곡선이 수직이라는 것은 확장 정책이 장기적으로 실업률은 못 낮추고 물가만 올린다는 뜻이다.',
-    quiz:{ q:'필립스 곡선에 대한 설명으로 옳은 것은?',
-      o:['실업률과 물가상승률은 단기적으로 같은 방향으로 움직인다.','장기 필립스 곡선은 자연실업률 수준에서 수직이다.','통화량과 물가의 관계를 나타낸다.','소득 분배의 불평등 정도를 나타낸다.'],
-      a:1, exp:'장기에는 기대인플레이션이 조정되어 실업률이 자연실업률로 돌아가므로 곡선이 수직이 된다. 단기에는 두 변수가 반대 방향으로 움직인다.' } },
-  { id:'e6', cat:'eco', term:'구축효과', en:'Crowding-out Effect',
-    def:'정부지출 확대가 금리를 끌어올려 민간 투자와 소비를 위축시키는 현상.',
-    points:['정부가 국채를 발행해 돈을 빌리면 금리가 오른다','금리가 오르면 민간 투자가 줄어든다','재정정책의 효과가 일부 상쇄된다'],
-    trap:'승수효과는 정부지출이 소득을 여러 배로 늘리는 효과로, 구축효과와 반대 방향의 개념이다.',
-    quiz:{ q:'정부가 국채를 발행해 지출을 늘리자 시장금리가 올라 기업 투자가 줄었다. 이 현상은?',
-      o:['승수효과','구축효과','피구효과','전시효과','톱니효과'],
-      a:1, exp:'구축효과다. 피구효과는 물가 하락으로 실질자산이 늘어 소비가 느는 것, 전시효과는 남의 소비를 따라 하는 것, 톱니효과는 소득이 줄어도 소비가 쉽게 줄지 않는 것이다.' } },
-  { id:'e7', cat:'eco', term:'매몰비용', en:'Sunk Cost',
-    def:'이미 지출되어 어떤 선택을 하든 회수할 수 없는 비용.',
-    points:['합리적 의사결정에서는 고려하지 않아야 한다','기회비용: 선택으로 포기한 대안 중 가장 큰 가치','매몰비용에 집착하는 것을 콩코드 오류라고도 한다'],
-    trap:'"이미 들인 돈이 아까워서" 계속 진행하는 것이 매몰비용 오류다.',
-    quiz:{ q:'합리적인 의사결정에서 고려하지 말아야 하는 비용은?',
-      o:['기회비용','매몰비용','한계비용','암묵적 비용'],
-      a:1, exp:'매몰비용은 어떤 선택을 해도 돌려받을 수 없으므로 앞으로의 결정에 영향을 주면 안 된다.' } },
-  { id:'e8', cat:'eco', term:'지니계수', en:'Gini Coefficient',
-    def:'소득 분배의 불평등 정도를 0에서 1 사이의 값으로 나타낸 지표.',
-    points:['0이면 완전 평등, 1이면 완전 불평등','로렌츠 곡선과 완전평등선(대각선) 사이의 면적으로 계산한다','10분위분배율: 하위 40% 소득 ÷ 상위 20% 소득, 클수록 평등'],
-    trap:'지니계수와 5분위배율은 클수록 불평등, 10분위분배율은 클수록 평등이다. 방향이 반대라 자주 출제된다.',
-    quiz:{ q:'소득분배 지표에 대한 설명으로 옳지 않은 것은?',
-      o:['지니계수는 0에 가까울수록 평등하다.','로렌츠 곡선이 대각선에 가까울수록 평등하다.','10분위분배율은 값이 클수록 불평등하다.','5분위배율은 값이 클수록 불평등하다.'],
-      a:2, exp:'10분위분배율은 하위 40%의 소득을 상위 20%의 소득으로 나눈 값이라 클수록 평등하다.' } },
-
-  { id:'d1', cat:'dig', term:'CBDC', en:'Central Bank Digital Currency · 중앙은행 디지털화폐',
-    def:'중앙은행이 발행하는 디지털 형태의 법정화폐.',
-    points:['법정화폐와 1:1로 교환되어 가치가 안정적이다','소매용(일반 국민)과 도매용(금융기관 간 결제)으로 나뉜다','한국은행은 예금토큰을 활용한 실거래 테스트(프로젝트 한강)를 진행했다'],
-    trap:'예금이 CBDC로 대거 옮겨 가면 은행의 자금중개 기능이 약해질 수 있다(탈중개화, 디지털 뱅크런 우려).',
-    quiz:{ q:'중앙은행 디지털화폐(CBDC)에 대한 설명으로 옳지 않은 것은?',
-      o:['중앙은행이 발행하고 법정화폐와 1:1로 교환된다.','비트코인처럼 수요와 공급에 따라 가치가 크게 변한다.','소매용과 도매용으로 나뉜다.','은행의 자금중개 기능이 약해질 수 있다는 우려가 있다.'],
-      a:1, exp:'CBDC는 법정화폐의 디지털 형태라 가치가 안정적이다. 가치가 크게 변하는 것은 민간 암호자산의 특징이다.' } },
-  { id:'d2', cat:'dig', term:'마이데이터', en:'MyData · 본인신용정보관리업',
-    def:'여러 금융회사에 흩어진 내 신용정보를 한곳에 모아 조회·관리하고 맞춤형 서비스를 받는 것.',
-    points:['근거법: 신용정보법 (2020년 데이터 3법 개정)','2022년 1월부터 표준 API 방식 전면 시행, 스크린 스크래핑 금지','개인정보 전송요구권 도입으로 전 산업 분야로 확대되는 중'],
-    trap:'핵심은 정보주체가 자기 정보를 원하는 곳으로 보내라고 요구할 수 있는 권리(개인신용정보 전송요구권)다.',
-    quiz:{ q:'마이데이터에 대한 설명으로 옳은 것은?',
-      o:['금융회사가 고객 동의 없이 데이터를 모아 분석하는 서비스다.','개인신용정보 전송요구권에 바탕을 둔다.','근거 법률은 전자금융거래법이다.','스크린 스크래핑 방식을 원칙으로 한다.'],
-      a:1, exp:'마이데이터는 정보주체의 전송요구권에 바탕을 두며, 근거법은 신용정보법이고 표준 API 방식이 원칙이다.' } },
-  { id:'d3', cat:'dig', term:'오픈뱅킹', en:'Open Banking',
-    def:'하나의 앱에서 여러 은행 계좌를 조회하고 이체할 수 있도록 은행의 결제 기능을 표준 API로 개방한 공동 인프라.',
-    points:['2019년 12월 전면 시행, 금융결제원이 운영','핀테크 기업, 상호금융, 증권사, 카드사 등으로 참여가 확대되었다','고객 동의를 전제로 한다'],
-    trap:'오픈뱅킹은 결제·이체 인프라 개방, 마이데이터는 정보 통합 조회·관리로 구분한다.',
-    quiz:{ q:'하나의 앱으로 여러 은행 계좌를 조회·이체할 수 있도록 표준 API로 은행 결제망을 개방한 인프라는?',
-      o:['오픈뱅킹','마이데이터','BaaS','간편결제','인터넷전문은행'],
-      a:0, exp:'오픈뱅킹이다. 금융결제원이 운영하며 고객 동의를 받아 여러 은행의 조회·이체 기능을 이용한다.' } },
-  { id:'d4', cat:'dig', term:'레그테크 · 섭테크', en:'RegTech · SupTech',
-    def:'레그테크는 금융회사가 규제 준수 업무를, 섭테크는 금융감독기관이 감독 업무를 IT로 효율화하는 기술이다.',
-    points:['RegTech = Regulation + Technology (금융회사가 사용)','SupTech = Supervision + Technology (감독기관이 사용)','예: AI 이상거래 탐지, 자금세탁방지(AML) 모니터링'],
-    trap:'누가 사용하는지(금융회사인가, 감독기관인가)로 구분하는 문제가 자주 나온다.',
-    quiz:{ q:'금융감독기관이 감독 업무의 효율을 높이기 위해 활용하는 기술을 뜻하는 용어는?',
-      o:['레그테크','섭테크','인슈어테크','프롭테크','테크핀'],
-      a:1, exp:'섭테크다. 레그테크는 금융회사가 쓰는 규제 준수 기술, 프롭테크는 부동산과 기술의 결합, 테크핀은 IT기업이 주도하는 금융서비스다.' } },
-  { id:'d5', cat:'dig', term:'금융규제 샌드박스', en:'Regulatory Sandbox',
-    def:'혁신적인 금융서비스가 기존 규제에 막히지 않도록 일정 기간 규제를 면제하거나 유예해 주는 제도.',
-    points:['근거법: 금융혁신지원 특별법 (2019년 4월 시행)','금융위원회가 혁신금융서비스로 지정한다','특례 기간: 최대 2년, 1회 연장 시 최대 4년'],
-    trap:'아이들이 모래 놀이터(sandbox)에서 마음껏 놀듯, 안전한 범위 안에서 시험해 볼 수 있게 한다는 뜻이다.',
-    quiz:{ q:'금융규제 샌드박스에 대한 설명으로 옳지 않은 것은?',
-      o:['금융혁신지원 특별법에 근거한다.','금융위원회가 혁신금융서비스를 지정한다.','지정되면 기간 제한 없이 영구적으로 규제가 면제된다.','기존 규제를 일정 기간 면제하거나 유예한다.'],
-      a:2, exp:'규제 특례는 기간이 정해져 있다. 최대 2년이고 한 번 연장하면 최대 4년이다.' } },
-  { id:'d6', cat:'dig', term:'블록체인', en:'Blockchain · 분산원장기술',
-    def:'거래 기록을 블록 단위로 묶어 네트워크 참여자들이 함께 나눠 보관하는 분산원장 기술.',
-    points:['중앙 관리자 없이 참여자 간 합의로 거래를 검증한다','해시값으로 블록이 연결되어 위·변조가 어렵다','퍼블릭(누구나 참여)과 프라이빗·컨소시엄(허가된 참여자)으로 나뉜다'],
-    trap:'합의 방식: 작업증명(PoW, 비트코인), 지분증명(PoS, 이더리움).',
-    quiz:{ q:'블록체인의 특징으로 옳지 않은 것은?',
-      o:['거래 기록을 여러 참여자가 분산해 보관한다.','해시값으로 블록이 연결되어 위·변조가 어렵다.','중앙 서버가 모든 거래를 최종 승인한다.','참여 범위에 따라 퍼블릭과 프라이빗으로 나뉜다.'],
-      a:2, exp:'블록체인은 중앙 서버 없이 참여자들의 합의로 거래를 검증하는 것이 핵심이다.' } },
-  { id:'d7', cat:'dig', term:'스테이블코인', en:'Stablecoin',
-    def:'법정화폐나 특정 자산에 가치를 연동해 가격 변동을 줄인 암호자산.',
-    points:['법정화폐 담보형 (예: USDT, USDC)','암호자산 담보형, 알고리즘형','2022년 테라·루나 사태: 알고리즘형의 가치 연동이 무너진 사례'],
-    trap:'CBDC는 중앙은행이 발행하고, 스테이블코인은 민간이 발행한다.',
-    quiz:{ q:'스테이블코인에 대한 설명으로 옳은 것은?',
-      o:['중앙은행만 발행할 수 있다.','법정화폐 등에 가치를 연동해 가격 변동을 줄인다.','공급량이 정해져 있어 가격이 계속 오른다.','예금자보호 대상이다.'],
-      a:1, exp:'스테이블코인은 민간이 발행하며 달러 같은 자산에 가치를 연동한다. 예금자보호 대상이 아니다.' } },
-  { id:'d8', cat:'dig', term:'임베디드 금융', en:'Embedded Finance',
-    def:'비금융기업이 자사 플랫폼에 결제, 대출, 보험 같은 금융서비스를 내장해 제공하는 것.',
-    points:['예: 쇼핑 앱의 간편결제와 BNPL(선구매 후결제), 자동차 구매 시 보험 가입','금융회사는 BaaS(Banking as a Service)로 인프라를 제공한다','고객은 금융 앱을 따로 열지 않고 서비스 안에서 금융을 이용한다'],
-    trap:'BaaS는 금융회사 쪽에서 본 개념, 임베디드 금융은 비금융기업 쪽에서 본 개념이다.',
-    quiz:{ q:'쇼핑몰 앱에서 결제할 때 바로 선구매 후결제(BNPL)를 이용할 수 있도록, 비금융기업이 금융서비스를 자사 플랫폼에 내장하는 것은?',
-      o:['임베디드 금융','오픈뱅킹','디파이(DeFi)','P2P 금융','마이데이터'],
-      a:0, exp:'임베디드 금융이다. 디파이는 블록체인 기반 탈중앙화 금융, P2P 금융은 개인 간 대출 중개다.' } },
-];
+// [용어, 영문, 정의, [핵심], 출제포인트, 문제, [정답, 오답...], 해설] → 객체
+const DATA = [];
+CAT_ORDER.forEach(cat => BN[cat].forEach((x, i) => DATA.push({
+  id: `${cat}-${i + 1}`, cat, rank: i + 1, tier: tierOf(i + 1),
+  term: x[0], en: x[1], def: x[2], points: x[3], trap: x[4],
+  quiz: { q: x[5], o: x[6], a: 0, exp: x[7] },
+})));
+DATA.sort((a, b) => a.rank - b.rank || CAT_ORDER.indexOf(a.cat) - CAT_ORDER.indexOf(b.cat));
 const BY_ID = Object.fromEntries(DATA.map(d => [d.id, d]));
 const MARKS = ['①','②','③','④','⑤'];
 
-// storage (per-viewer convenience only)
 function load(key, fallback){ try{ const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }catch(e){ return fallback; } }
 function save(key, val){ try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){} }
 
 const state = {
-  tab: 'learn', cat: 'all', search: '', hide: false,
-  known: new Set(load('bn.known', [])),
-  wrong: load('bn.wrong', {}),
+  tab: 'learn', cat: 'all', tier: 'all', search: '', hide: false, shown: PAGE,
+  known: new Set(load('bn2.known', []).filter(id => BY_ID[id])),
+  wrong: Object.fromEntries(Object.entries(load('bn2.wrong', {})).filter(([id]) => BY_ID[id])),
   revealed: new Set(),
+  qcount: 20,
   quiz: null,
 };
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const inCat = d => state.cat === 'all' || d.cat === state.cat;
+const inScope = d => (state.cat === 'all' || d.cat === state.cat) && (state.tier === 'all' || d.tier === +state.tier);
 function shuffle(a){ a = a.slice(); for(let i=a.length-1;i>0;i--){ const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; }
+$('#total').textContent = `${DATA.length}개념`;
 
 /* ---------- filters ---------- */
 function renderFilters(){
-  const opts = [['all','전체',DATA.length], ...Object.entries(CATS).map(([k,v]) => [k, v, DATA.filter(d => d.cat === k).length])];
-  $('#filters').innerHTML = opts.map(([k,label,n]) =>
+  const inCat = d => state.cat === 'all' || d.cat === state.cat;
+  const cats = [['all','전체', DATA.length], ...CAT_ORDER.map(k => [k, CATS[k], DATA.filter(d => d.cat === k).length])];
+  $('#catRow').innerHTML = '<span class="lbl">분야</span>' + cats.map(([k,label,n]) =>
     `<button class="chip" data-cat="${k}" aria-pressed="${state.cat===k}">${label}<span class="n">${n}</span></button>`).join('');
+  const tiers = [['all','전체','', DATA.filter(inCat).length], ...[1,2,3].map(t => [String(t), TIERS[t].label, TIERS[t].stars, DATA.filter(d => inCat(d) && d.tier === t).length])];
+  $('#tierRow').innerHTML = '<span class="lbl">빈출도</span>' + tiers.map(([k,label,st,n]) =>
+    `<button class="chip" data-tier="${k}" aria-pressed="${state.tier===k}">${st ? `<span class="st">${st}</span>` : ''}${label}<span class="n">${n}</span></button>`).join('');
 }
-$('#filters').addEventListener('click', e => {
-  const b = e.target.closest('[data-cat]'); if(!b) return;
-  state.cat = b.dataset.cat; renderFilters();
-  if(state.tab === 'learn') renderCards(); else startQuiz(DATA.filter(inCat).map(d => d.id));
-});
+function onScopeChange(){
+  renderFilters(); state.shown = PAGE;
+  if(state.tab === 'learn') renderCards(); else startQuiz(scopeIds(), true);
+}
+$('#catRow').addEventListener('click', e => { const b = e.target.closest('[data-cat]'); if(!b) return; state.cat = b.dataset.cat; onScopeChange(); });
+$('#tierRow').addEventListener('click', e => { const b = e.target.closest('[data-tier]'); if(!b) return; state.tier = b.dataset.tier; onScopeChange(); });
+const scopeIds = () => DATA.filter(inScope).map(d => d.id);
 
 /* ---------- learn ---------- */
 function renderCards(){
   const q = state.search.trim().toLowerCase();
-  const list = DATA.filter(d => inCat(d) && (!q || (d.term + d.en + d.def).toLowerCase().includes(q)));
-  $('#grid').innerHTML = list.length ? list.map(d => {
+  const list = DATA.filter(d => inScope(d) && (!q || (d.term + d.en + d.def).toLowerCase().includes(q)));
+  const view = list.slice(0, state.shown);
+  $('#count').textContent = list.length ? `${list.length}개 중 ${view.length}개 표시 · 빈출 순위순` : '';
+  $('#grid').innerHTML = list.length ? view.map(d => {
     const covered = state.hide && !state.revealed.has(d.id);
     const miss = state.wrong[d.id] ? `<span class="miss">오답 ${state.wrong[d.id]}회</span>` : '';
     const body = covered
@@ -382,7 +276,7 @@ function renderCards(){
          <ul class="points">${d.points.map(p => `<li>${esc(p)}</li>`).join('')}</ul>
          <div class="trap"><b>출제 포인트</b>${esc(d.trap)}</div>`;
     return `<article class="card" id="c-${d.id}">
-      <div class="card-top"><span class="cat cat-${d.cat}">${CATS[d.cat]}</span>${miss}</div>
+      <div class="card-top"><span class="l"><span class="cat cat-${d.cat}">${CATS[d.cat]}</span><span class="rank">#${d.rank}</span><span class="stars" title="${TIERS[d.tier].label}">${TIERS[d.tier].stars}</span></span>${miss}</div>
       <h3 class="term">${esc(d.term)}</h3>
       <div class="en">${esc(d.en)}</div>
       ${body}
@@ -391,18 +285,23 @@ function renderCards(){
         <button class="btn-s" data-try="${d.id}">이 개념 문제 풀기</button>
       </div>
     </article>`;
-  }).join('') : `<p class="empty">"${esc(state.search)}"에 해당하는 개념이 없습니다.</p>`;
-  const n = state.known.size;
-  $('#knownCount').textContent = `${n} / ${DATA.length}`;
-  $('#knownBar').style.width = (n / DATA.length * 100) + '%';
+  }).join('') : `<p class="empty">${q ? `"${esc(state.search)}"에 해당하는 개념이 없습니다.` : '이 범위에 해당하는 개념이 없습니다.'}</p>`;
+  const rest = list.length - view.length;
+  $('#more').hidden = rest <= 0;
+  $('#more').textContent = `더 보기 (${rest}개 남음)`;
+  const scope = DATA.filter(inScope);
+  const n = scope.filter(d => state.known.has(d.id)).length;
+  $('#knownCount').textContent = `${n} / ${scope.length}`;
+  $('#knownBar').style.width = (scope.length ? n / scope.length * 100 : 0) + '%';
 }
+$('#more').addEventListener('click', () => { state.shown += PAGE; renderCards(); });
 $('#grid').addEventListener('click', e => {
   const r = e.target.closest('[data-reveal]'), k = e.target.closest('[data-known]'), t = e.target.closest('[data-try]');
   if(r){ state.revealed.add(r.dataset.reveal); renderCards(); }
-  if(k){ const id = k.dataset.known; state.known.has(id) ? state.known.delete(id) : state.known.add(id); save('bn.known', [...state.known]); renderCards(); }
-  if(t){ setTab('quiz'); startQuiz([t.dataset.try]); }
+  if(k){ const id = k.dataset.known; state.known.has(id) ? state.known.delete(id) : state.known.add(id); save('bn2.known', [...state.known]); renderCards(); }
+  if(t){ setTab('quiz'); startQuiz([t.dataset.try], false); }
 });
-$('#search').addEventListener('input', e => { state.search = e.target.value; renderCards(); });
+$('#search').addEventListener('input', e => { state.search = e.target.value; state.shown = PAGE; renderCards(); });
 $('#hide').addEventListener('click', () => {
   state.hide = !state.hide; state.revealed.clear();
   $('#hide').setAttribute('aria-pressed', state.hide);
@@ -411,22 +310,31 @@ $('#hide').addEventListener('click', () => {
 });
 
 /* ---------- quiz ---------- */
-function startQuiz(ids){
-  state.quiz = {
-    ids: shuffle(ids), i: 0, correct: 0, missed: [],
-    orders: {}, picked: null,
-  };
-  state.quiz.ids.forEach(id => { state.quiz.orders[id] = shuffle(BY_ID[id].quiz.o.map((_, i) => i)); });
+function startQuiz(ids, sample){
+  let picked = shuffle(ids);
+  if(sample && state.qcount) picked = picked.slice(0, state.qcount);
+  state.quiz = { ids: picked, i: 0, correct: 0, missed: [], orders: {}, picked: null, single: !sample && ids.length === 1 };
+  picked.forEach(id => { state.quiz.orders[id] = shuffle(BY_ID[id].quiz.o.map((_, i) => i)); });
   renderQuiz();
+}
+function scopeLabel(){
+  const c = state.cat === 'all' ? '전체 분야' : CATS[state.cat];
+  const t = state.tier === 'all' ? '' : ` · ${TIERS[state.tier].label}`;
+  return c + t;
 }
 function renderQuiz(){
   const Q = state.quiz, total = Q.ids.length, done = Q.i >= total;
-  const scope = state.cat === 'all' ? '전체' : CATS[state.cat];
+  if(!total){
+    $('#qinfo').textContent = scopeLabel();
+    $('#qtrack').style.width = '0';
+    $('#qbody').innerHTML = '<div class="qcard"><p class="empty" style="padding:20px 0">이 범위에 풀 문제가 없습니다. 분야나 빈출도를 바꿔 보세요.</p></div>';
+    return;
+  }
   $('#qinfo').innerHTML = done
-    ? `${scope} 범위 · 완료`
-    : `${total === 1 ? '개념 1문제' : scope + ' 범위'} · <span class="num">${Q.i + 1} / ${total}</span> · 정답 <span class="num">${Q.correct}</span>`;
+    ? `${Q.single ? '개념 1문제' : scopeLabel()} · 완료`
+    : `${Q.single ? '개념 1문제' : scopeLabel()} · <span class="num">${Q.i + 1} / ${total}</span> · 정답 <span class="num">${Q.correct}</span>`;
   $('#qtrack').style.width = ((Q.i + (Q.picked !== null ? 1 : 0)) / total * 100) + '%';
-  $('#qWrongOnly').disabled = !Object.keys(state.wrong).some(id => inCat(BY_ID[id]));
+  $('#qWrongOnly').disabled = !Object.keys(state.wrong).some(id => inScope(BY_ID[id]));
 
   if(done){
     const pct = Math.round(Q.correct / total * 100);
@@ -437,7 +345,7 @@ function renderQuiz(){
         return `<li><span class="t"><span class="cat cat-${d.cat}">${CATS[d.cat]}</span>${esc(d.term)}</span><button class="btn-s" data-goto="${id}">개념 보기</button></li>`; }).join('')}</ul>` : ''}
       <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center">
         ${Q.missed.length ? `<button class="btn primary" data-retry="missed">틀린 ${Q.missed.length}문제 다시 풀기</button>` : ''}
-        <button class="btn" data-retry="all">전체 다시 풀기</button>
+        <button class="btn" data-retry="all">새 문제로 다시 풀기</button>
       </div></div>`;
     return;
   }
@@ -455,7 +363,7 @@ function renderQuiz(){
   const ok = Q.picked === qz.a;
   const ansPos = order.indexOf(qz.a);
   $('#qbody').innerHTML = `<div class="qcard">
-    <div class="qhead"><span class="cat cat-${d.cat}">${CATS[d.cat]}</span><span>Q${Q.i + 1}</span></div>
+    <div class="qhead"><span class="cat cat-${d.cat}">${CATS[d.cat]}</span><span class="stars">${TIERS[d.tier].stars}</span><span>Q${Q.i + 1}</span></div>
     <p class="qtext">${esc(qz.q)}</p>
     <ul class="opts">${opts}</ul>
     ${answered ? `<div class="exp">
@@ -474,15 +382,19 @@ function pick(orig){
   const id = Q.ids[Q.i];
   Q.picked = orig;
   if(orig === BY_ID[id].quiz.a){ Q.correct++; }
-  else { Q.missed.push(id); state.wrong[id] = (state.wrong[id] || 0) + 1; save('bn.wrong', state.wrong); }
+  else { Q.missed.push(id); state.wrong[id] = (state.wrong[id] || 0) + 1; save('bn2.wrong', state.wrong); }
   renderQuiz();
   const nb = $('#qNext'); if(nb) nb.focus({preventScroll:true});
 }
 function next(){ const Q = state.quiz; if(Q.picked === null) return; Q.i++; Q.picked = null; renderQuiz(); }
 function gotoCard(id){
+  const d = BY_ID[id];
   setTab('learn');
-  if(!inCat(BY_ID[id])){ state.cat = 'all'; renderFilters(); }
-  state.search = ''; $('#search').value = ''; state.revealed.add(id); renderCards();
+  if(!inScope(d)){ state.cat = 'all'; state.tier = 'all'; renderFilters(); }
+  state.search = ''; $('#search').value = ''; state.revealed.add(id);
+  const pos = DATA.filter(inScope).findIndex(x => x.id === id);
+  if(pos >= state.shown) state.shown = Math.ceil((pos + 1) / PAGE) * PAGE;
+  renderCards();
   const el = document.getElementById('c-' + id);
   if(el){ el.scrollIntoView({behavior:'smooth', block:'center'}); el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash'); }
 }
@@ -491,15 +403,16 @@ $('#qbody').addEventListener('click', e => {
   if(p) pick(+p.dataset.pick);
   if(e.target.closest('#qNext')) next();
   if(g) gotoCard(g.dataset.goto);
-  if(r) startQuiz(r.dataset.retry === 'missed' ? state.quiz.missed.slice() : DATA.filter(inCat).map(d => d.id));
+  if(r){ r.dataset.retry === 'missed' ? startQuiz(state.quiz.missed.slice(), false) : startQuiz(scopeIds(), true); }
 });
-$('#qRestart').addEventListener('click', () => startQuiz(DATA.filter(inCat).map(d => d.id)));
+$('#qcount').addEventListener('change', e => { state.qcount = +e.target.value; startQuiz(scopeIds(), true); });
+$('#qRestart').addEventListener('click', () => startQuiz(scopeIds(), true));
 $('#qWrongOnly').addEventListener('click', () => {
-  const ids = Object.keys(state.wrong).filter(id => BY_ID[id] && inCat(BY_ID[id])).sort((a,b) => state.wrong[b] - state.wrong[a]);
-  if(ids.length) startQuiz(ids);
+  const ids = Object.keys(state.wrong).filter(id => inScope(BY_ID[id])).sort((a,b) => state.wrong[b] - state.wrong[a]);
+  if(ids.length) startQuiz(ids, true);
 });
 document.addEventListener('keydown', e => {
-  if(state.tab !== 'quiz' || !state.quiz || e.target.matches('input')) return;
+  if(state.tab !== 'quiz' || !state.quiz || e.target.matches('input, select')) return;
   const Q = state.quiz; if(Q.i >= Q.ids.length) return;
   if(Q.picked === null && /^[1-5]$/.test(e.key)){
     const order = Q.orders[Q.ids[Q.i]], pos = +e.key - 1;
@@ -523,8 +436,8 @@ $('#tab-learn').addEventListener('click', () => setTab('learn'));
 $('#tab-quiz').addEventListener('click', () => setTab('quiz'));
 
 renderFilters();
-startQuiz(DATA.map(d => d.id));
+startQuiz(scopeIds(), true);
 setTab(location.hash === '#quiz' ? 'quiz' : 'learn');
 </script>
-
-</body></html>
+</body>
+</html>
